@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MessagingTutorial</string>
+    <string name="login_activity_label">Sinch Messaging Tutorial</string>
+    <string name="username">USERNAME</string>
+    <string name="password">PASSWORD</string>
+    <string name="title_activity_list_users">ListUsersActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="message_elipses">Message...</string>
+    <string name="logout">Logout</string>
+
+    <string name="dialog_title">Interact with User:</string>
+
+    <string name="progress_dialog">Loading...</string>
+
+    <string name="chat">Chat</string>
+
+    <string name="add_friend">Add Friend</string>
+    <string name="remove_friend">Remove Friend</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="unfriend">Remove</string>
+    <string name="confirm_removal">Confirm Removal</string>
+
+
+
+</resources>

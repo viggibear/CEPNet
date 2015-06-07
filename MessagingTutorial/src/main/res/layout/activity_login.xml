@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.viggibear.cepnet.app.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/loginUsername"
+            android:hint="@string/username"
+            android:textColorHint="@color/primary_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:inputType="text"
+            android:textSize="32sp"
+            android:padding="10dp"
+            android:textColor="@color/primary_text"
+            android:background="@drawable/inputbox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <requestFocus/>
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="center">
+
+            <!--<com.melnykov.fab.FloatingActionButton
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_exit_to_app_black_18dp"
+                fab:fab_colorNormal="@color/pink_main"
+                fab:fab_colorPressed="@color/pink_dark"
+                fab:fab_colorRipple="@color/very_dark_gray"/>-->
+
+            <EditText
+                android:id="@+id/loginPassword"
+                android:hint="@string/password"
+                android:textColorHint="@color/primary_text"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="40dp"
+                android:inputType="textPassword"
+                android:textSize="32sp"
+                android:padding="10dp"
+                android:textColor="@color/primary_text"
+                android:background="@drawable/inputbox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+            </EditText>
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_arrow_forward_black_18dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/signup"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</RelativeLayout>
