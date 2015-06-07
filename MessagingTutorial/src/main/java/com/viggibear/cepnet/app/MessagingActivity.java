@@ -1,12 +1,17 @@
 package com.viggibear.cepnet.app;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -145,15 +150,64 @@ public class MessagingActivity extends ActionBarActivity {
         }
 
         @Override
-        public void onIncomingMessage(MessageClient client, Message message) {
+        public void onIncomingMessage(MessageClient client, final Message message) {
             if (message.getSenderId().equals(recipientId)) {
                 WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
                 messageAdapter.addMessage(writableMessage, MessageAdapter.DIRECTION_INCOMING);
             }
+
+            else {
+                final NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(MessagingActivity.this)
+                                .setSmallIcon(R.drawable.ic_message_black_24dp)
+                                .setContentTitle("Message received")
+                                .setContentText(message.getTextBody());
+
+                final Intent resultIntent = new Intent(MessagingActivity.this, MessagingActivity.class);
+
+                resultIntent.putExtra("RECIPIENT_ID", message.getSenderId());
+
+                ParseQuery<ParseUser> query2 = ParseUser.getQuery();
+                query2.findInBackground(new FindCallback<ParseUser>() {
+                    public void done(List<ParseUser> users, com.parse.ParseException e) {
+                        if (e == null) {
+                            for (ParseUser user : users) {
+                                if (user.equals(message.getSenderId())) {
+                                    final String senderName = user.getUsername();
+                                    resultIntent.putExtra("RECIPIENT_NAME", senderName);
+                                    mBuilder.setContentTitle("Message Received From: "+senderName);
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    "Error finding that user",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(MessagingActivity.this);
+
+                stackBuilder.addParentStack(MessagingActivity.class);
+
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+                mBuilder.setAutoCancel(true);
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                mNotificationManager.notify(001, mBuilder.build());
+
+            }
         }
 
         @Override
-        public void onMessageSent(MessageClient client, Message message, String recipientId) {
+        public void onMessageSent(MessageClient client, final Message message, String recipientId) {
 
             final WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
             messageAdapter.addMessage(writableMessage, MessageAdapter.DIRECTION_OUTGOING);
